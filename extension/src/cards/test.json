@@ -1,0 +1,439 @@
+{
+  "_id": "64f9fa5e95108e00143034f9",
+  "reinforcements": {
+    "commandTokens": 7,
+    "units": [
+      {
+        "cost": {
+          "value": 8,
+          "units": 1
+        },
+        "combat": {
+          "value": 6,
+          "rolls": 2
+        },
+        "sustainDamage": {
+          "used": false,
+          "thisRound": false
+        },
+        "upgraded": false,
+        "_id": "64f9fa5d95108e0014303245",
+        "displayName": "J.N.S. Hylarim",
+        "move": 1,
+        "capacity": 3,
+        "name": "Flagship",
+        "type": "Ship",
+        "color": "purple"
+      }
+    ]
+  },
+  "eliminated": false,
+  "passed": false,
+  "onSecondAction": false,
+  "tradeGoods": 1,
+  "commodities": 0,
+  "fleetPool": 5,
+  "strategyPool": 2,
+  "tacticPool": 0,
+  "victoryPoints": 0,
+  "hits": 0,
+  "nonFighterHits": 0,
+  "zombies": 0,
+  "alastorUnitIds": [],
+  "user": {
+    "_id": "64ec8a2a38c6e600141a26bc",
+    "username": "korbi",
+    "avatar": "https://twilight-wars-prod.s3.amazonaws.com/default-avatar.png"
+  },
+  "number": 2,
+  "faction": "The Universities of Jol-Nar",
+  "color": "purple",
+  "planetCards": [
+    {
+      "_id": "64f9fa5e95108e00143034fa",
+      "name": "Nar",
+      "resources": 2,
+      "influence": 3,
+      "exhausted": false,
+      "faction": "The Universities of Jol-Nar",
+      "units": [],
+      "laws": []
+    }
+  ],
+  "promissoryNotes": [
+    {
+      "revealed": false,
+      "_id": "64f9fa5e95108e00143034fc",
+      "name": "Ceasefire",
+      "color": "purple",
+      "ability": {
+        "used": false,
+        "delayedEffect": true,
+        "_id": "64f9fa5e95108e00143034fd",
+        "isComponentAction": false,
+        "step": "Activate System",
+        "timing": "after"
+      }
+    },
+    {
+      "revealed": false,
+      "_id": "64f9fa5e95108e0014303502",
+      "name": "Research Agreement",
+      "faction": "The Universities of Jol-Nar"
+    }
+  ],
+  "startingUnits": [],
+  "technology": [
+    {
+      "exhausted": false,
+      "_id": "64f9fa5e95108e001430352b",
+      "name": "Neural Motivator",
+      "type": "Biotic"
+    }
+  ],
+  "technologyDeck": [
+    {
+      "prerequisites": {
+        "biotic": 1
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e001430352f",
+      "name": "Dacxive Animators",
+      "type": "Biotic"
+    },
+    {
+      "prerequisites": {
+        "biotic": 3
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303531",
+      "name": "X-89 Bacterial Weapon",
+      "type": "Biotic"
+    },
+    {
+      "prerequisites": {
+        "cybernetic": 1
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303532",
+      "name": "Graviton Laser System",
+      "type": "Cybernetic"
+    },
+    {
+      "prerequisites": {
+        "cybernetic": 2
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303533",
+      "name": "Transit Diodes",
+      "type": "Cybernetic"
+    },
+    {
+      "prerequisites": {
+        "cybernetic": 3
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303534",
+      "name": "Integrated Economy",
+      "type": "Cybernetic",
+      "ability": {
+        "used": false,
+        "delayedEffect": false,
+        "_id": "64f9fa5e95108e0014303535",
+        "isComponentAction": false,
+        "step": "Establish Control",
+        "timing": "after"
+      }
+    },
+    {
+      "prerequisites": {
+        "propulsion": 1
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303536",
+      "name": "Gravity Drive",
+      "type": "Propulsion"
+    },
+    {
+      "prerequisites": {
+        "propulsion": 2
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303537",
+      "name": "Fleet Logistics",
+      "type": "Propulsion"
+    },
+    {
+      "prerequisites": {
+        "propulsion": 3
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303538",
+      "name": "Light Wave Deflector",
+      "type": "Propulsion"
+    },
+    {
+      "prerequisites": {
+        "warfare": 1
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303539",
+      "name": "Magen Defense Grid",
+      "type": "Warfare",
+      "ability": {
+        "used": false,
+        "delayedEffect": false,
+        "_id": "64f9fa5e95108e001430353a",
+        "isComponentAction": false,
+        "step": "Ground Combat Start",
+        "timing": "before"
+      }
+    },
+    {
+      "prerequisites": {
+        "warfare": 2
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e001430353b",
+      "name": "Duranium Armor",
+      "type": "Warfare",
+      "ability": {
+        "used": false,
+        "delayedEffect": false,
+        "_id": "64f9fa5e95108e001430353c",
+        "isComponentAction": false,
+        "step": "Retreat",
+        "timing": "before"
+      }
+    },
+    {
+      "prerequisites": {
+        "warfare": 3
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e001430353d",
+      "name": "Assault Cannon",
+      "type": "Warfare",
+      "ability": {
+        "used": false,
+        "delayedEffect": false,
+        "_id": "64f9fa5e95108e001430353e",
+        "isComponentAction": false,
+        "step": "Anti-Fighter Barrage",
+        "timing": "before"
+      }
+    },
+    {
+      "prerequisites": {
+        "cybernetic": 2
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e001430353f",
+      "name": "Space Dock II"
+    },
+    {
+      "prerequisites": {
+        "cybernetic": 1,
+        "warfare": 3
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303540",
+      "name": "War Sun"
+    },
+    {
+      "prerequisites": {
+        "biotic": 2
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303541",
+      "name": "Infantry II"
+    },
+    {
+      "prerequisites": {
+        "biotic": 1,
+        "propulsion": 1
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303542",
+      "name": "Fighter II"
+    },
+    {
+      "prerequisites": {
+        "warfare": 2
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303543",
+      "name": "Destroyer II"
+    },
+    {
+      "prerequisites": {
+        "biotic": 1,
+        "cybernetic": 1,
+        "warfare": 1
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303544",
+      "name": "Cruiser II"
+    },
+    {
+      "prerequisites": {
+        "propulsion": 2
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303546",
+      "name": "Carrier II"
+    },
+    {
+      "prerequisites": {
+        "cybernetic": 1,
+        "propulsion": 2
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303547",
+      "name": "Dreadnought II"
+    },
+    {
+      "prerequisites": {
+        "cybernetic": 2
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e0014303548",
+      "name": "E-Res Siphons",
+      "type": "Cybernetic",
+      "ability": {
+        "used": false,
+        "delayedEffect": false,
+        "_id": "64f9fa5e95108e0014303549",
+        "isComponentAction": false,
+        "step": "Activate System",
+        "timing": "after"
+      },
+      "faction": "The Universities of Jol-Nar"
+    },
+    {
+      "prerequisites": {
+        "propulsion": 2
+      },
+      "exhausted": false,
+      "_id": "64f9fa5e95108e001430354a",
+      "name": "Spacial Conduit Cylinder",
+      "type": "Propulsion",
+      "ability": {
+        "used": false,
+        "delayedEffect": false,
+        "_id": "64f9fa5e95108e001430354b",
+        "isComponentAction": false,
+        "step": "Activate System",
+        "timing": "after"
+      },
+      "faction": "The Universities of Jol-Nar"
+    }
+  ],
+  "game": "64f9fa5d95108e001430326d",
+  "actionCards": [
+    {
+      "_id": "64f9fa5d95108e00143032fc",
+      "name": "Imperial Rider",
+      "ability": {
+        "used": false,
+        "delayedEffect": true,
+        "_id": "64f9fa5d95108e00143032fd",
+        "isComponentAction": false,
+        "step": "First Agenda Revealed,Second Agenda Revealed",
+        "timing": "after"
+      }
+    },
+    {
+      "_id": "64f9fa5d95108e0014303316",
+      "name": "Hack Election",
+      "ability": {
+        "used": false,
+        "delayedEffect": true,
+        "_id": "64f9fa5d95108e0014303317",
+        "isComponentAction": false,
+        "step": "First Agenda Revealed,Second Agenda Revealed",
+        "timing": "after"
+      }
+    },
+    {
+      "_id": "64f9fa5d95108e0014303318",
+      "name": "Solar Flare",
+      "ability": {
+        "used": false,
+        "delayedEffect": true,
+        "_id": "64f9fa5d95108e0014303319",
+        "isComponentAction": false,
+        "step": "Activate System",
+        "timing": "after"
+      }
+    }
+  ],
+  "enemyActionCards": [],
+  "activeActionCards": [],
+  "secretObjectives": [
+    {
+      "canScorePlayerIds": [],
+      "revealed": false,
+      "_id": "64f9fa5d95108e0014303292",
+      "name": "Make an Example of their World",
+      "phase": "Action",
+      "type": "Secret",
+      "victoryPoints": 1,
+      "scores": []
+    }
+  ],
+  "strategyCards": [
+    {
+      "exhausted": false,
+      "tradeGoods": 0,
+      "_id": "64f9fa5d95108e00143032b3",
+      "number": 4,
+      "name": "Construction"
+    }
+  ],
+  "results": [],
+  "laws": [],
+  "lastReadMessages": [
+    {
+      "_id": "64fa42b895108e0014378d1a",
+      "userId": "64ec8d7638c6e600141a71c8",
+      "messageId": "650205f0f724e00014c3876e"
+    },
+    {
+      "_id": "64fcc38e50bcfc001480af1a",
+      "userId": "64f368fa1c6bfb00144c202a",
+      "messageId": "64fcc72950bcfc001480fa08"
+    },
+    {
+      "_id": "64febb52e2e365001493ab21",
+      "userId": "64cd4f10db7b1b0014d28ed8",
+      "messageId": "64fede8ee2e365001494d4ea"
+    },
+    {
+      "_id": "64ff3ab4e2e36500149ab5fc",
+      "userId": "63d5540011b1a400165f1026",
+      "messageId": "6502054df724e00014c36997"
+    }
+  ],
+  "autoPassSettings": {
+    "_id": "6501ab5a2bd69c0014ad1eb7",
+    "timingWindows": [
+      {
+        "_id": "6501ab5a2bd69c0014ad1eb4",
+        "step": "Action Card Played",
+        "timing": "when",
+        "option": 1
+      },
+      {
+        "_id": "6501ab5a2bd69c0014ad1eb5",
+        "step": "Sabotage Played",
+        "timing": "when",
+        "option": 1
+      }
+    ]
+  },
+  "__v": 25,
+  "lastReadGroupMessageId": "65018e6e2bd69c0014aac26b",
+  "revealedPromissoryNotes": [],
+  "revealedSecretObjectives": []
+}

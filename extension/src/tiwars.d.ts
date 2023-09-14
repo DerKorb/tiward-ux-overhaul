@@ -34,12 +34,158 @@ declare interface PlanetCard {
   name: string;
   exhausted?: boolean;
 }
-declare interface Player {
-  color: TI4Colors;
-  faction: string;
-  planetCards: PlanetCard[];
+
+declare interface ActionCard {
+  name: string;
+  ability: {
+    used: boolean;
+    delayedEffect: boolean;
+    _id: string;
+    isComponentAction: boolean;
+    step: string;
+    timing: string;
+  };
 }
 
+interface Player {
+  _id: string;
+  reinforcements: {
+    commandTokens: number;
+    units: Array<{
+      cost: {
+        value: number;
+        units: number;
+      };
+      combat: {
+        value: number;
+        rolls: number;
+      };
+      sustainDamage: {
+        used: boolean;
+        thisRound: boolean;
+      };
+      upgraded: boolean;
+      _id: string;
+      displayName: string;
+      move: number;
+      capacity: number;
+      name: string;
+      type: string;
+      color: string;
+    }>;
+  };
+  eliminated: boolean;
+  passed: boolean;
+  onSecondAction: boolean;
+  tradeGoods: number;
+  commodities: number;
+  fleetPool: number;
+  strategyPool: number;
+  tacticPool: number;
+  victoryPoints: number;
+  hits: number;
+  nonFighterHits: number;
+  zombies: number;
+  alastorUnitIds: string[];
+  user: {
+    _id: string;
+    username: string;
+    avatar: string;
+  };
+  number: number;
+  faction: string;
+  color: string;
+  planetCards: Array<{
+    _id: string;
+    name: string;
+    resources: number;
+    influence: number;
+    exhausted: boolean;
+    faction: string;
+    units: any[];
+    laws: any[];
+  }>;
+  promissoryNotes: Array<{
+    revealed: boolean;
+    _id: string;
+    name: string;
+    color: string;
+    ability: {
+      used: boolean;
+      delayedEffect: boolean;
+      _id: string;
+      isComponentAction: boolean;
+      step: string;
+      timing: string;
+    };
+    faction?: string;
+  }>;
+  startingUnits: any[];
+  technology: Array<{
+    exhausted: boolean;
+    _id: string;
+    name: string;
+    type: string;
+  }>;
+  technologyDeck: Array<{
+    prerequisites: {
+      [key: string]: number;
+    };
+    exhausted: boolean;
+    _id: string;
+    name: string;
+    type: string;
+    ability?: {
+      used: boolean;
+      delayedEffect: boolean;
+      _id: string;
+      isComponentAction: boolean;
+      step: string;
+      timing: string;
+    };
+    faction?: string;
+  }>;
+  game: string;
+  actionCards: Array<{
+    _id: string;
+    name: string;
+    ability: {
+      used: boolean;
+      delayedEffect: boolean;
+      _id: string;
+      isComponentAction: boolean;
+      step: string;
+      timing: string;
+    };
+  }>;
+  enemyActionCards: any[];
+  activeActionCards: any[];
+  secretObjectives: Array<{
+    canScorePlayerIds: any[];
+    revealed: boolean;
+    _id: string;
+    name: string;
+    phase: string;
+    type: string;
+    victoryPoints: number;
+    scores: any[];
+  }>;
+  strategyCards: Array<{
+    exhausted: boolean;
+    tradeGoods: number;
+    _id: string;
+    number: number;
+    name: string;
+  }>;
+  results: any[];
+  laws: any[];
+  lastReadMessages: Array<{
+    _id: string;
+    userId: string;
+    messageId: string;
+  }>;
+  autoPassSettings: any;
+}
 declare interface Unit {
   color: TI4Colors;
   name: UnitName;
@@ -48,6 +194,7 @@ declare interface Unit {
 }
 
 declare interface TiWarsApi {
+  getPlayer: () => Promise<Player>;
   getPlayers: () => Promise<Player[]>;
   getBoardSystems: () => Promise<BoardSystem[]>;
 }
