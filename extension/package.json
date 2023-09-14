@@ -1,5 +1,5 @@
 {
-  "name": "TIWars-UX-Overhaul",
+  "name": "tiwars-ux-overhaul",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "esbuild": "^0.19.3",
+    "ti4calc": "https://github.com/alpha-mouse/ti4calc",
     "typescript": "^5.2.2"
   },
   "devDependencies": {

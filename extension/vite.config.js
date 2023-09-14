@@ -13,6 +13,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      ti4calc: "./node_modules/ti4calc",
       three:
         "https://www.twilightwars.com/js/vendor/three/build/three.module.js",
     },

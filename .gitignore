@@ -7,3 +7,4 @@ _headers
 _redirects
 index2.html
 netlify.toml
+.vscode
