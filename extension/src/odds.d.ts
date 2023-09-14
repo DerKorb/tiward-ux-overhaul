@@ -1,42 +1,46 @@
-declare module "ti4calc/calculator.js" {
-  enum Race {
-    Arborec = "Arborec",
-    Creuss = "Creuss",
-    Hacan = "Hacan",
-    JolNar = "JolNar",
-    L1Z1X = "L1Z1X",
-    Letnev = "Letnev",
-    Mentak = "Mentak",
-    Muaat = "Muaat",
-    Naalu = "Naalu",
-    Saar = "Saar",
-    Sardakk = "Sardakk",
-    Sol = "Sol",
-    Virus = "Virus",
-    Winnu = "Winnu",
-    Xxcha = "Xxcha",
-    Yin = "Yin",
-    Yssaril = "Yssaril",
-  }
-  enum UnitType {
-    Flagship = "Flagship",
-    WarSun = "WarSun",
-    Dreadnought = "Dreadnought",
-    Cruiser = "Cruiser",
-    Carrier = "Carrier",
-    Destroyer = "Destroyer",
-    Fighter = "Fighter",
-    Ground = "Ground",
-    PDS = "PDS",
-  }
+declare type Race =
+  | "Arborec"
+  | "Creuss"
+  | "Hacan"
+  | "JolNar"
+  | "L1Z1X"
+  | "Letnev"
+  | "Mentak"
+  | "Muaat"
+  | "Naalu"
+  | "Saar"
+  | "Sardakk"
+  | "Sol"
+  | "Virus"
+  | "Winnu"
+  | "Xxcha"
+  | "Yin"
+  | "Yssaril";
+declare type UnitType =
+  | "Flagship"
+  | "WarSun"
+  | "Dreadnought"
+  | "Cruiser"
+  | "Carrier"
+  | "Destroyer"
+  | "Fighter"
+  | "Ground"
+  | "PDS";
 
-  interface Options {
-    race: Race;
-    riskDirectHit?: boolean;
-  }
+declare interface Options {
+  race: Race;
+  riskDirectHit?: boolean;
+}
+declare type Fleet = {
+  [key in UnitType]?: {
+    count: number;
+  };
+};
+
+declare module "ti4calc/calculator.js" {
   interface Input {
-    attackerUnits: { [key in UnitType]?: { count: number } }[];
-    defenderUnits: { [key in UnitType]?: { count: number } }[];
+    attackerUnits: Fleet;
+    defenderUnits: Fleet;
     options: {
       attacker: Options;
       defender: Options;
