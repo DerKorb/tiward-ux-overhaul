@@ -1,4 +1,4 @@
-import { Object3D, Vector2 } from "three";
+import { Vector2 } from "three";
 import { calculator } from "ti4calc/calculator.js";
 
 const factionMap: { [tiwars: string]: Race } = {
@@ -52,7 +52,7 @@ export async function installOddsComponent() {
   const raycaster = new Raycaster();
   const mouse = new Vector2();
 
-  const selectedSystems = new Set<Object3D>();
+  const selectedSystems = new Set<BoardSystem>();
   function setVectorCoordinates(event: MouseEvent, vector: Vector2) {
     vector.x = (event.clientX / window.innerWidth) * 2 - 1;
     vector.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -66,15 +66,22 @@ export async function installOddsComponent() {
     const intersectAllBoardSystems =
       raycaster.intersectObjects(allBoardSystems);
     // toggle selection
-    if (selectedSystems.has(intersectAllBoardSystems[0].object)) {
-      selectedSystems.delete(intersectAllBoardSystems[0].object);
+    if (
+      selectedSystems.has(
+        intersectAllBoardSystems[0].object.userData as BoardSystem
+      )
+    ) {
+      selectedSystems.delete(
+        intersectAllBoardSystems[0].object.userData as BoardSystem
+      );
     } else {
-      selectedSystems.add(intersectAllBoardSystems[0].object);
+      selectedSystems.add(
+        intersectAllBoardSystems[0].object.userData as BoardSystem
+      );
     }
     if (selectedSystems.size >= 2) {
-      const [attackingSystem, defendingSystem, ...others] = Array.from(
-        selectedSystems
-      ).map((system) => system.userData as BoardSystem);
+      const [attackingSystem, defendingSystem, ...others] =
+        Array.from(selectedSystems);
       console.log(attackingSystem, defendingSystem, others);
       const attackingFleet: Fleet = {};
       for (const unit of attackingSystem.units) {
@@ -106,14 +113,17 @@ export async function installOddsComponent() {
 
       const attackingRace = factionMap[attackingPlayer.faction];
       const defendingRace = factionMap[defendingPlayer.faction];
-      var result = calculator.computeProbabilities({
+      const input: Input = {
         attackerUnits: attackingFleet,
         defenderUnits: defendingFleet,
+        battleType: "Space",
         options: {
           attacker: { race: attackingRace, riskDirectHit: true },
           defender: { race: defendingRace, riskDirectHit: true },
         },
-      });
+      };
+      console.log(input);
+      var result = calculator.computeProbabilities(input);
       console.log(result);
     }
   });

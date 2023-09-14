@@ -36,16 +36,17 @@ declare type Fleet = {
     count: number;
   };
 };
+declare interface Input {
+  attackerUnits: Fleet;
+  defenderUnits: Fleet;
+  battleType: "Space" | "Ground";
+  options: {
+    attacker: Options;
+    defender: Options;
+  };
+}
 
 declare module "ti4calc/calculator.js" {
-  interface Input {
-    attackerUnits: Fleet;
-    defenderUnits: Fleet;
-    options: {
-      attacker: Options;
-      defender: Options;
-    };
-  }
   interface Calculator {
     computeProbabilities: (input: Input) => {
       attacker: any;
