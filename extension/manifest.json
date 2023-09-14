@@ -1,0 +1,24 @@
+{
+  "name": "TI4 UI Tweaks",
+  "description": "A collection of tweaks to the Twilight Imperium 4th Edition UI.",
+  "version": "1.0",
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": [
+        "*://twilightwars.com/*",
+        "*://*.twilightwars.com/*"
+      ],
+      "js": [
+        "init.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "bundle.js.iife.js"
+  ],
+  "permissions": [
+    "*://twilightwars.com/*",
+    "*://*.twilightwars.com/*"
+  ]
+}

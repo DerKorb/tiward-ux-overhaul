@@ -1,0 +1,9 @@
+# Local Netlify folder
+.netlify
+node_modules
+js
+netlify
+_headers
+_redirects
+index2.html
+netlify.toml
