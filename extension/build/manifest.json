@@ -7,9 +7,6 @@
     "*://twilightwars.com/*",
     "*://*.twilightwars.com/*"
   ],
-  "action": {
-    "default_popup": "popup.html"
-  },
   "content_scripts": [
     {
       "matches": [

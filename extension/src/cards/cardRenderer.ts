@@ -1,3 +1,5 @@
+import { Material, Mesh } from "three";
+
 let cardsComponentTemplate = document.createElement("template");
 cardsComponentTemplate.innerHTML = `
     <style>
@@ -42,12 +44,39 @@ class CardsComponent extends HTMLElement {
     const API = (await import(
       "https://www.twilightwars.com/js/api.js"
     )) as TiWarsApi;
+
+    const { onActionCardDoubleClick } = await import(
+      "https://www.twilightwars.com/js/events/action-card.js"
+    );
+
+    const { playerActionCards } = await import(
+      "https://www.twilightwars.com/js/loaders/load-player-cards.js"
+    );
+
     const player = await API.getPlayer();
     console.log(player);
     const { actionCards, secretObjectives, promissoryNotes } = player;
 
     actionCards.forEach((card) => {
       const cardDiv = document.createElement("div");
+      cardDiv.ondblclick = () => {
+        const matchingMesh: Mesh | undefined = playerActionCards.find(
+          (mesh: Mesh) => mesh.userData.name === card.name
+        );
+        if (matchingMesh) {
+          (matchingMesh.material as Material).opacity = 0.3;
+          matchingMesh.scale.x = 100;
+          matchingMesh.scale.y = 100;
+          matchingMesh.visible = true;
+          setTimeout(() => {
+            onActionCardDoubleClick();
+            matchingMesh.scale.x = 1;
+            matchingMesh.scale.y = 1;
+            (matchingMesh.material as Material).opacity = 1;
+            matchingMesh.visible = false;
+          }, 1);
+        }
+      };
       cardDiv.className = "card";
       this.cardsContainer!.appendChild(cardDiv);
       const cardImage = document.createElement("img");
@@ -56,6 +85,7 @@ class CardsComponent extends HTMLElement {
     });
     secretObjectives.forEach((objective) => {
       const objectiveDiv = document.createElement("div");
+
       objectiveDiv.className = "card";
       this.cardsContainer!.appendChild(objectiveDiv);
       const objectiveImage = document.createElement("img");
