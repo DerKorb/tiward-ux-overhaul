@@ -44,7 +44,7 @@ class CardsComponent extends HTMLElement {
     )) as TiWarsApi;
     const player = await API.getPlayer();
     console.log(player);
-    const { actionCards, secretObjectives } = player;
+    const { actionCards, secretObjectives, promissoryNotes } = player;
 
     actionCards.forEach((card) => {
       const cardDiv = document.createElement("div");
@@ -62,6 +62,20 @@ class CardsComponent extends HTMLElement {
       objectiveImage.src = `/img/objectives/${objective.name}.png`;
       objectiveDiv.appendChild(objectiveImage);
     });
+    promissoryNotes
+      .filter((note) => note.color !== player.color)
+      .forEach((note) => {
+        const noteDiv = document.createElement("div");
+        noteDiv.className = "card";
+        this.cardsContainer!.appendChild(noteDiv);
+        const noteImage = document.createElement("img");
+        if ("faction" in note) {
+          noteImage.src = `/img/faction/${note.faction}/${note.name}.png`;
+        } else {
+          noteImage.src = `/img/misc/${note.color}/${note.name}.png`;
+        }
+        noteDiv.appendChild(noteImage);
+      });
   }
 }
 

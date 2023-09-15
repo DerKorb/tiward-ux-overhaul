@@ -94,7 +94,7 @@ interface Player {
   };
   number: number;
   faction: string;
-  color: string;
+  color: "red" | "green" | "blue" | "yellow" | "purple" | "orange";
   planetCards: Array<{
     _id: string;
     name: string;

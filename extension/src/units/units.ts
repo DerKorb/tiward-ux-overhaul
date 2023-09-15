@@ -28,7 +28,7 @@ unitsComponentTemplate.innerHTML = `
             z-index: 1000;
         }
         #showButton:hover + #units {
-            display: block; /* Show the table when the button is hovered */
+            display: inline-block; /* Show the table when the button is hovered */
         }
     </style>
     <button id="showButton">Show Units</button>
