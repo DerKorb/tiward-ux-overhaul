@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "vite build",
-    "watch": "vite build --watch"
+    "watch": "vite build --watch",
+    "create-crx": "node create-crx.js"
   },
   "dependencies": {
     "esbuild": "^0.19.3",

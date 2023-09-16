@@ -366,21 +366,22 @@ async function updateCanvasTexture(
     switch (planet.tech) {
       case "Warfare":
         techColor = "red";
-        techSymbol = "🔴";
+        techSymbol = "⚔️";
+        
         break;
       case "Biotic":
         techColor = "green";
-        techSymbol = "🟢";
+        techSymbol = "🌱";
         break;
       case "Cybernetic":
         techColor = "yellow";
         fontColor = "white";
-        techSymbol = "🟡";
+        techSymbol = "🤖";
         break;
       case "Propulsion":
         techColor = "blue";
         fontColor = "white";
-        techSymbol = "🔵";
+        techSymbol = "🚀";
         break;
       default:
         techColor = null;
@@ -390,16 +391,20 @@ async function updateCanvasTexture(
     // context.fillRect(200, 0, canvas.width, canvas.height);
     context.font = `bold ${fontSize}px Arial`;
     const textWidth = context.measureText(statsText).width;
+    let traitSymbol = "";
     if (textWidth > 0) {
       switch (planet.trait) {
         case "Hazardous":
           context.fillStyle = "red";
+          traitSymbol = "☢️";
           break;
         case "Industrial":
           context.fillStyle = "green";
+          traitSymbol = "🏭";
           break;
         case "Cultural":
           context.fillStyle = "blue";
+          traitSymbol = "🎭";
           break;
         default:
           context.fillStyle = "white";
@@ -432,7 +437,7 @@ async function updateCanvasTexture(
       }
       writeText(
         fontSize * 0.9,
-        planet.name + techSymbol,
+        planet.name + techSymbol + traitSymbol,
         xPosition + 10,
         yPosition + 85,
         foregroundColorsByPlayerColor[playerColor]
