@@ -366,22 +366,22 @@ async function updateCanvasTexture(
     switch (planet.tech) {
       case "Warfare":
         techColor = "red";
-        techSymbol = "⚔️";
-        
+        techSymbol = "🔴";
+
         break;
       case "Biotic":
         techColor = "green";
-        techSymbol = "🌱";
+        techSymbol = "🟢";
         break;
       case "Cybernetic":
         techColor = "yellow";
         fontColor = "white";
-        techSymbol = "🤖";
+        techSymbol = "🟡";
         break;
       case "Propulsion":
         techColor = "blue";
         fontColor = "white";
-        techSymbol = "🚀";
+        techSymbol = "🔵";
         break;
       default:
         techColor = null;
@@ -445,84 +445,84 @@ async function updateCanvasTexture(
     }
   }
   if (boardSystem.units) {
-    function drawSystemUnits(
-      unitCounts: { [unit: string]: number },
-      centerX: number,
-      y: number,
-      width: number = 80
-    ) {
-      const entries = Object.entries(unitCounts);
-      const totalWidth = entries.length * width;
-      // context.fillStyle = "rgba(0, 0, 0, 0.5)";
-      // context.fillRect(centerX - totalWidth / 2, y, totalWidth, fontSize * 4);
-      const unitColor = boardSystem.units[0]?.color ?? "white";
-
-      const unitStrings = ["Fi", "Fi+", "In", "In+"];
-      const unitSymbols = ["🛦", "🛦+", "🥆", "🥆+"];
-      const positions = [
-        [90, 231, 331],
-        [90, 231, 331],
-        [410, 231, 331],
-        [410, 231, 331],
-      ];
-
-      for (let i = 0; i < unitStrings.length; i++) {
-        if (unitCounts[unitStrings[i]]) {
-          writeText(
-            fontSize * 3,
-            `${unitSymbols[i]}`,
-            positions[i][0],
-            positions[i][1],
-            unitColor,
-            true,
-            "white"
-          );
-          writeText(
-            fontSize * 3,
-            `${unitCounts[unitStrings[i]] ? unitCounts[unitStrings[i]] : ""}`,
-            positions[i][0],
-            positions[i][2],
-            unitColor,
-            true,
-            "white"
-          );
-        }
-      }
-      // entries
-      //   .filter(
-      //     ([name, count]) =>
-      //       name !== "Fi" && name !== "Fi+" && name !== "In" && name !== "In+"
-      //   )
-      //   .forEach(([name, count], index) => {
-      //     const xPosition =
-      //       centerX + index * width - totalWidth / 2 + width / 2;
-      //     writeText(
-      //       fontSize * 1.7,
-      //       name,
-      //       xPosition,
-      //       y + fontSize * 1.5,
-      //       unitColor,
-      //       true
-      //     );
-      //     writeText(
-      //       fontSize * 1.7,
-      //       count.toString(),
-      //       xPosition,
-      //       y + fontSize * 3.5,
-      //       unitColor,
-      //       true
-      //     );
-      //   });
-    }
-    const unitCounts = boardSystem.units.reduce((acc, unit) => {
-      const key = unit.upgraded
-        ? unit.name.slice(0, 2) + "+"
-        : unit.name.slice(0, 2);
-      acc[key] = (acc[key] || 0) + 1;
-      return acc;
-    }, {} as { [unit: string]: number });
+    const ownerColor = boardSystem.units[0].color;
+    const numberOfOwnFighters = boardSystem.units.filter(
+      (unit) => unit.name === "Fighter" && unit.color === ownerColor
+    ).length;
+    const numberOfOwnInfantry = boardSystem.units.filter(
+      (unit) => unit.name === "Infantry" && unit.color === ownerColor
+    ).length;
+    const numberOfEnemyFighters = boardSystem.units.filter(
+      (unit) => unit.name === "Fighter" && unit.color !== ownerColor
+    ).length;
+    const numberOfEnemyInfantry = boardSystem.units.filter(
+      (unit) => unit.name === "Infantry" && unit.color !== ownerColor
+    ).length;
     context.font = `bold ${fontSize * 2}px Arial`;
-    const [x, y] = SystemUnitPositions[boardSystem.planets.length];
-    drawSystemUnits(unitCounts, x, y);
+    // context.fillStyle = "rgba(0, 0, 0, 0.5)";
+    // context.fillRect(centerX - totalWidth / 2, y, totalWidth, fontSize * 4);
+    const unitColor = boardSystem.units[0]?.color ?? "white";
+    const opponentColor = boardSystem.units.find(
+      (unit) => unit.color !== ownerColor
+    )?.color;
+    const unitStrings = ["Fi", "Fi+", "In", "In+"];
+    const unitSymbols = ["🛦", "🛦+", "🥆", "🥆+"];
+    const positions = [
+      [90, 231, 331],
+      [90, 231, 331],
+      [410, 231, 331],
+      [410, 231, 331],
+    ];
+
+    if (numberOfOwnFighters + numberOfOwnFighters > 0) {
+      if (numberOfEnemyFighters > 0) {
+        writeText(
+          fontSize * 3,
+          numberOfEnemyFighters.toFixed(0),
+          90,
+          231,
+          unitColor,
+          true,
+          opponentColor
+        );
+      } else {
+        writeText(fontSize * 3, `🛦`, 90, 231, unitColor, true, "white");
+      }
+
+      writeText(
+        fontSize * 3,
+        numberOfOwnFighters.toFixed(0),
+        90,
+        331,
+        unitColor,
+        true,
+        "white"
+      );
+    }
+
+    if (numberOfOwnInfantry + numberOfEnemyInfantry > 0) {
+      if (numberOfEnemyInfantry > 0) {
+        writeText(
+          fontSize * 3,
+          numberOfEnemyInfantry.toFixed(0),
+          410,
+          231,
+          unitColor,
+          true,
+          opponentColor
+        );
+      } else {
+        writeText(fontSize * 3, `🥆`, 410, 231, unitColor, true, "white");
+      }
+      writeText(
+        fontSize * 3,
+        numberOfOwnInfantry.toFixed(0),
+        410,
+        331,
+        unitColor,
+        true,
+        "white"
+      );
+    }
   }
 }
