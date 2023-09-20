@@ -236,3 +236,13 @@ declare module "https://www.twilightwars.com/js/utils/geometries.js" {
   const geometries: any; // Replace 'any' with the actual type
   export default geometries;
 }
+
+declare module "https://www.twilightwars.com/js/events/action-card.js" {
+  const onActionCardDoubleClick: () => void;
+  export { onActionCardDoubleClick };
+}
+
+declare module "https://www.twilightwars.com/js/loaders/load-player-cards.js" {
+  const playerActionCards: any[];
+  export { playerActionCards };
+}
