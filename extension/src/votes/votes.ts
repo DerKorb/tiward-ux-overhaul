@@ -32,7 +32,18 @@ votesComponentTemplate.innerHTML = `
     <div id="votes">
           <div class="pie" id="pie1"></div>
     </div>
+    <div id="outcomes">
+    </div>
   `;
+
+const darkerVariant: { [color in TI4Colors]: string } = {
+  red: "#500000",
+  green: "#005000",
+  blue: "#000050",
+  yellow: "#505000",
+  purple: "#500050",
+  orange: "#504000",
+};
 
 class VotesComponent extends HTMLElement {
   votesContainer: HTMLElement | null;
@@ -49,28 +60,33 @@ class VotesComponent extends HTMLElement {
       "https://www.twilightwars.com/js/api.js"
     )) as TiWarsApi;
     const players = await API.getPlayers();
-
+    console.log(players);
     const summedInfluenceOfAllPlanetsByPlayerColor = players.reduce(
       (acc2, player) => {
-        const summedInfluenceOfAllPlanets = player.planetCards.reduce(
+        let summedInfluenceOfAllPlanets = player.planetCards.reduce(
           (acc, planet) => {
             return acc + planet.influence;
           },
           0
         );
+        let exhaustedInfluence = player.planetCards.reduce((acc, planet) => {
+          return acc + (planet.exhausted ? planet.influence : 0);
+        }, 0);
+        (acc2 as any)[darkerVariant[player.color]] = exhaustedInfluence;
         acc2[player.color] = summedInfluenceOfAllPlanets;
         return acc2;
       },
       {} as { [key in TI4Colors]: number }
     );
 
-    // for (const player of players) {
-    //   const playerDiv = document.createElement("div");
-    //   playerDiv.innerText = `${player.color}: ${
-    //     summedInfluenceOfAllPlanetsByPlayerColor[player.color]
-    //   }`;
-    //   this.votesContainer!.appendChild(playerDiv);
-    // }
+    // add a entry for all votes so far
+    for (const player of players) {
+      if (player.vote && !player.vote.abstain) {
+        summedInfluenceOfAllPlanetsByPlayerColor[player.color] =
+          summedInfluenceOfAllPlanetsByPlayerColor[player.color] -
+          player.vote.count;
+      }
+    }
 
     const totalInfluence = Object.values(
       summedInfluenceOfAllPlanetsByPlayerColor

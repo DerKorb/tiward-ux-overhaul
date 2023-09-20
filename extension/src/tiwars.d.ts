@@ -177,6 +177,11 @@ interface Player {
     number: number;
     name: string;
   }>;
+  vote: {
+    abstain: boolean;
+    count: number;
+    outcome: string;
+  };
   results: any[];
   laws: any[];
   lastReadMessages: Array<{

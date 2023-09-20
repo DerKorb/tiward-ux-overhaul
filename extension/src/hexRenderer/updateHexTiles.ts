@@ -445,7 +445,7 @@ async function updateCanvasTexture(
     }
   }
   if (boardSystem.units) {
-    const ownerColor = boardSystem.units[0].color;
+    const ownerColor = boardSystem.units[0]?.color ?? "white";
     const numberOfOwnFighters = boardSystem.units.filter(
       (unit) => unit.name === "Fighter" && unit.color === ownerColor
     ).length;
