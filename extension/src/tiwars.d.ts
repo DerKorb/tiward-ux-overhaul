@@ -198,10 +198,116 @@ declare interface Unit {
   upgraded: boolean;
 }
 
+declare interface Game {
+  _id: string;
+  abilityRound: {
+    inProgress: boolean;
+    passed: string[];
+    playedActionCards: string[];
+  };
+  turn: {
+    player: {
+      current: number;
+      previous: number;
+      active: number;
+    };
+    direction: string;
+  };
+  isPublic: boolean;
+  usePok: boolean;
+  controlledPlanets: string[];
+  invadedPlanets: string[];
+  combatDestroyedShipTypes: string[];
+  combatParticipants: string[];
+  custodiansTokenRemoved: boolean;
+  phase: string;
+  round: number;
+  step: string;
+  tradePlayers: string[];
+  transactions: string[];
+  victoryPoints: number;
+  over: boolean;
+  canUndoLastAction: boolean;
+  name: string;
+  mode: string;
+  presetMap: string;
+  numberOfPlayers: number;
+  publicObjectives: Array<{
+    canScorePlayerIds: string[];
+    revealed: boolean;
+    _id: string;
+    name: string;
+    stage: number;
+    type: string;
+    phase: string;
+    victoryPoints: number;
+    scores: Array<{
+      _id: string;
+      playerId: string;
+      round: number;
+      phase: string;
+    }>;
+  }>;
+  strategyCards: Array<{
+    exhausted: boolean;
+    tradeGoods: number;
+    _id: string;
+    number: number;
+    name: string;
+  }>;
+  actionCards: {
+    discard: Array<{
+      _id: string;
+      name: string;
+      ability: {
+        used: boolean;
+        delayedEffect: boolean;
+        _id: string;
+        isComponentAction: boolean;
+      };
+    }>;
+  };
+  agendas: {
+    discard: string[];
+  };
+  appVersion: string;
+  abilityRoundQueue: string[];
+  laws: string[];
+  subStepQueue: string[];
+  speaker: number;
+  createdAt: number;
+  updatedAt: number;
+  __v: number;
+  lastPlayedActionCardId: string;
+}
+
 declare interface TiWarsApi {
-  getPlayer: () => Promise<Player>;
+  getPlayer: (playerNumber: number) => Promise<Player>;
   getPlayers: () => Promise<Player[]>;
+  getPlayerSystems: () => Promise<any>;
+  getNeighbors: (playerNumber: number) => Promise<any>;
+  getAdjacentSystems: (
+    systemNumber: number,
+    playerNumber: number
+  ) => Promise<any>;
+  getGame: () => Promise<Game>;
   getBoardSystems: () => Promise<BoardSystem[]>;
+  getGameLogs: (lastLogId: string) => Promise<any>;
+  getChatMessages: (userId: string, lastChatId: string) => Promise<any>;
+  getUnreadChats: () => Promise<any>;
+  markAsRead: (messageId: string, userId: string) => Promise<any>;
+  getLaws: () => Promise<any>;
+  getScoredSecretObjectives: () => Promise<any>;
+  getTopAgenda: () => Promise<any>;
+  getTopTwoAgendas: () => Promise<any>;
+  getVotingStatuses: () => Promise<any>;
+  getTradeRequests: () => Promise<any>;
+  getObjectiveStatuses: () => Promise<any>;
+  getNekroAvailableTechnologies: () => Promise<any>;
+  getDeckInfo: (type: string) => Promise<any>;
+  getNotes: () => Promise<any>;
+  saveNotes: (content: string) => Promise<any>;
+  subscribePlayer: (subscription: any) => Promise<any>;
 }
 declare interface Planet {
   name: string;

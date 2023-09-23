@@ -273,7 +273,7 @@ async function updateCanvasTexture(
   // const y = PlanetPositions[boardSystem.planets.length][n - 1][1];
   // plane.position.set(x, y, 0.1);
   // Add the plane as a child to the system
-  // systemMesh.children[0].add(plane);
+  // systemMesh.add(plane);
   (systemMesh.material as Material).onBeforeCompile = function (
     shader: Shader
   ) {

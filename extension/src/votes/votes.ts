@@ -60,7 +60,9 @@ class VotesComponent extends HTMLElement {
       "https://www.twilightwars.com/js/api.js"
     )) as TiWarsApi;
     const players = await API.getPlayers();
-    console.log(players);
+    const game = await API.getGame();
+    (globalThis as any).players = players;
+    (globalThis as any).game = game;
     const summedInfluenceOfAllPlanetsByPlayerColor = players.reduce(
       (acc2, player) => {
         let summedInfluenceOfAllPlanets = player.planetCards.reduce(
@@ -72,8 +74,12 @@ class VotesComponent extends HTMLElement {
         let exhaustedInfluence = player.planetCards.reduce((acc, planet) => {
           return acc + (planet.exhausted ? planet.influence : 0);
         }, 0);
-        (acc2 as any)[darkerVariant[player.color]] = exhaustedInfluence;
-        acc2[player.color] = summedInfluenceOfAllPlanets;
+        if (game.phase === "voting") {
+          (acc2 as any)[darkerVariant[player.color]] = exhaustedInfluence;
+          acc2[player.color] = summedInfluenceOfAllPlanets - exhaustedInfluence;
+        } else {
+          acc2[player.color] = summedInfluenceOfAllPlanets;
+        }
         return acc2;
       },
       {} as { [key in TI4Colors]: number }
