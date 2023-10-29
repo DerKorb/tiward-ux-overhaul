@@ -1,4 +1,10 @@
 import { Material, Mesh, Shader } from "three";
+import {
+  backgroundColorsByPlayerColor,
+  foregroundColorsByPlayerColor,
+  wormholeColors,
+  wormholeSymbols,
+} from "./renderSettings";
 
 const backgroundBlack = "rgba(0, 0, 0, 0.8)";
 
@@ -47,7 +53,9 @@ export async function updateHexTiles() {
     "https://www.twilightwars.com/js/board-creation.js"
   )) as any;
   const boardSystems = await API.getBoardSystems();
+  (globalThis as any).boardSystems = boardSystems;
   const players = await API.getPlayers();
+  const game = await API.getGame();
 
   const maskImage = new Image();
   maskImage.src = "data:image/png;base64," + MaskAsBase64;
@@ -62,7 +70,13 @@ export async function updateHexTiles() {
         ? skeletonHexArray[skeletonHexArray.length - 1]
         : skeletonHexArray[boardSystem.position];
 
-    await updateCanvasTexture(players, boardSystem, maskImage, systemMesh);
+    await updateCanvasTexture(
+      players,
+      game,
+      boardSystem,
+      maskImage,
+      systemMesh
+    );
     systemMesh.userData.boardTokens?.controlTokens.forEach(
       (controlToken: Mesh) => {
         controlToken.visible = false;
@@ -86,6 +100,7 @@ const MaskAsBase64 = `iVBORw0KGgoAAAANSUhEUgAAAEoAAABACAMAAACKlRElAAAAAXNSR0IB2c
 
 async function updateCanvasTexture(
   players: Player[],
+  game: Game,
   boardSystem: BoardSystem,
   maskImage: HTMLImageElement,
   systemMesh: Mesh
@@ -101,38 +116,6 @@ async function updateCanvasTexture(
   canvas.width = 512;
   canvas.height = 512;
   // Draw a hexagon where the top and bottom are horizontal
-  const wormholeColors = {
-    Alpha: "red",
-    Beta: "blue",
-    Delta: "green",
-  };
-  const ColorByFaction = players.reduce((acc, player) => {
-    acc[player.faction] = player.color;
-    return acc;
-  }, {} as Record<string, TI4Colors>);
-
-  // context.fillStyle = "black";
-  // context.fillRect(0, 0, canvas.width, canvas.height);
-  const backgroundColorsByPlayerColor = {
-    red: "rgba(255, 0, 0, 1.0)",
-    blue: "rgba(0, 0, 255, 1.0)",
-    green: "rgba(0, 255, 0, 1.0)",
-    yellow: "rgba(255, 255, 0, 1.0)",
-    purple: "rgba(255, 0, 255, 1.0)",
-    black: "rgba(0, 0, 0, 1.0)",
-    orange: "rgba(255, 165, 0, 1.0)",
-  };
-  const foregroundColorsByPlayerColor: {
-    [key in TI4Colors | "white"]: string;
-  } = {
-    red: "rgba(255, 150, 150, 1)",
-    blue: "rgba(150, 150, 255, 1)",
-    green: "rgba(150, 255, 150, 1)",
-    yellow: "rgba(255, 255, 0, 1)",
-    purple: "rgba(255, 150, 255, 1)",
-    orange: "rgba(255, 150, 0, 1)",
-    white: "white",
-  };
 
   const firstUnit = boardSystem.units?.[0]!;
   const backgroundColor = firstUnit
@@ -207,22 +190,39 @@ async function updateCanvasTexture(
     writeText(fontSize * 1.5, boardSystem.anomaly, 256, 50, "white", true);
   }
 
-  const symbols = {
-    Alpha: "🔴",
-    Beta: "🔵",
-    Delta: "🟢",
-    Yellow: "🟡",
-  };
   if (boardSystem.wormhole) {
     writeText(
       fontSize * 3.5,
-      symbols[boardSystem.wormhole] ?? boardSystem.wormhole,
+      wormholeSymbols[boardSystem.wormhole] ?? boardSystem.wormhole,
       256,
       500,
       wormholeColors[boardSystem.wormhole],
       true
     );
   }
+
+  if (boardSystem.isHomeSystem) {
+    const matchingPlayer = players.find(
+      (player) => player.faction === boardSystem.faction
+    );
+    const playersStrategyCards = matchingPlayer?.strategyCards.map((card) =>
+      card.exhausted ? card.number : card.number + "!"
+    );
+    const isActivePlayer = game.turn.player.current === matchingPlayer?.number;
+    writeText(
+      fontSize * 5,
+      playersStrategyCards?.join(" ") ?? "",
+      256,
+      240,
+      isActivePlayer ? "red" : "white",
+      true
+    );
+  }
+
+  const ColorByFaction = players.reduce((acc, player) => {
+    acc[player.faction] = player.color;
+    return acc;
+  }, {} as Record<string, TI4Colors>);
 
   if (boardSystem.commandTokens) {
     boardSystem.commandTokens.forEach((token: string, n: number) => {
@@ -264,6 +264,7 @@ async function updateCanvasTexture(
   }
 
   const texture = new CanvasTexture(canvas);
+  console.log(systemMesh);
 
   // Create a plane with the canvas texture
   const planeGeometry = createHexagonGeometry(0.9);
@@ -274,6 +275,7 @@ async function updateCanvasTexture(
   // plane.position.set(x, y, 0.1);
   // Add the plane as a child to the system
   // systemMesh.add(plane);
+  systemMesh.userData.canvasTexture = texture;
   (systemMesh.material as Material).onBeforeCompile = function (
     shader: Shader
   ) {
@@ -359,6 +361,9 @@ async function updateCanvasTexture(
       ? owningPlayer.planetCards.find((card) => card.name === planet.name)
       : null;
 
+    if (planetCard?.faction) {
+      console.log(planetCard);
+    }
     const statsText = `${planet.resources}/${planet.influence}`;
     let techColor,
       fontColor,

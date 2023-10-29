@@ -1,6 +1,9 @@
 declare interface BoardSystem {
+  faction: string;
   units: Unit[];
+  isHomeSystem: boolean;
   number: number;
+  unitsToMove?: Unit[];
   position: any;
   anomaly: string;
   wormhole?: "Alpha" | "Beta" | "Delta";
@@ -101,7 +104,7 @@ interface Player {
     resources: number;
     influence: number;
     exhausted: boolean;
-    faction: string;
+    faction?: string;
     units: any[];
     laws: any[];
   }>;
@@ -314,12 +317,13 @@ declare interface Planet {
   resources: number;
   influence: number;
   units: Unit[];
+  unitsToMove?: Unit[];
   tech: "Warfare" | "Biotic" | "Cybernetic" | "Propulsion";
   trait: "Hazardous" | "Industrial" | "Cultural" | "Home";
 }
 declare interface boardCreation {
   skeletonHexArray: any;
-  allBoardSystems: any[];
+  allBoardSystems: BoardSystem[];
 }
 
 declare module "https://www.twilightwars.com/js/board-creation.js" {
@@ -341,6 +345,63 @@ declare module "https://www.twilightwars.com/js/app.js" {
 declare module "https://www.twilightwars.com/js/utils/geometries.js" {
   const geometries: any; // Replace 'any' with the actual type
   export default geometries;
+}
+
+declare module "https://www.twilightwars.com/js/utils/extras.js" {
+  export function adjustPlanetCardStats(): void;
+  export function exceedsCapacityOrFleetLimit(
+    system: any,
+    fleetPool: number
+  ): boolean;
+  export function fightersInSystem(): void;
+  export function getActiveSystem(systems: BoardSystem[]): {
+    userData: BoardSystem;
+  };
+  export function getAdjacencyList(position: number): number[];
+  export function getFactionAbilities(): void;
+  export function getFactionPromissoryNote(): void;
+  export function getFactionTechnologies(): void;
+  export function getPlanetName(planetId: string): string;
+  export function getRGBValue(): void;
+  export function getSystemName(systemNumber: number): string;
+  export function getUnitUpgradeTechnology(
+    unitName: string,
+    technologies: any[]
+  ): any;
+  export function hasReinforcement(): void;
+  export function infantryInSystem(): void;
+  export function isTradeComponentsEmpty(): void;
+  export function makeCircle(): void;
+  export function makeLawMesh(lawName: string): any;
+  export function makePlanetLawMesh(lawName: string, exhausted: boolean): any;
+  export function makePromissoryNoteMesh(note: any): any;
+  export function makePublicObjectiveMesh(position: any, userData: any): any;
+  export function numberOfNonFighterShipsInSystem(): void;
+  export function numberOfPlayersInSystem(): void;
+  export function organizeActionCards(): void;
+  export function organizeLaws(): void;
+  export function organizePlanetCards(): void;
+  export function organizePlanetLaws(): void;
+  export function organizePlayerLawCards(): void;
+  export function organizePlayerOwnedTechnologies(): void;
+  export function organizePlayerPromissoryNotes(): void;
+  export function organizeSecretObjectives(): void;
+  export function printCommandTokenList(): void;
+  export function printSystemUnitList(): void;
+  export function printTradeComponents(): void;
+  export function printUnitList(): void;
+  export function removeCard(): void;
+  export function removeLawFromGame(lawName: string): void;
+  export function resolveAgenda(
+    agendaName: string,
+    result: string,
+    playerVote: any
+  ): void;
+  export function revealStepButton(): void;
+  export function setCameraPosition(): void;
+  export function unitsInSystem(): void;
+  export function updateUnitsForSaleImage(): void;
+  export function urlBase64ToUint8Array(): void;
 }
 
 declare module "https://www.twilightwars.com/js/events/action-card.js" {

@@ -49,8 +49,9 @@ declare interface Input {
 declare module "ti4calc/calculator.js" {
   interface Calculator {
     computeProbabilities: (input: Input) => {
-      attacker: any;
-      defender: any;
+      distribution: { [key: string]: number };
+      attacker: string[];
+      defender: string[];
     };
   }
   const calculator: Calculator;

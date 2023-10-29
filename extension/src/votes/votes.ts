@@ -65,6 +65,9 @@ class VotesComponent extends HTMLElement {
     (globalThis as any).game = game;
     const summedInfluenceOfAllPlanetsByPlayerColor = players.reduce(
       (acc2, player) => {
+        if (player.faction === "The Nekro Virus") {
+          return acc2;
+        }
         let summedInfluenceOfAllPlanets = player.planetCards.reduce(
           (acc, planet) => {
             return acc + planet.influence;
