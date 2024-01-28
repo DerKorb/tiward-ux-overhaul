@@ -3,7 +3,7 @@
   "name": "TI4 UI Tweaks",
   "version": "1.0",
   "description": "A collection of tweaks to the Twilight Imperium 4th Edition UI.",
-  "permissions": [
+  "host_permissions": [
     "*://twilightwars.com/*",
     "*://*.twilightwars.com/*"
   ],
