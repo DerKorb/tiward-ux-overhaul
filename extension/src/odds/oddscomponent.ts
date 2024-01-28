@@ -1,4 +1,5 @@
 import { calculator } from "ti4calc/calculator.js";
+import { TiWarsApi, Unit, UnitName, boardCreation } from "../tiwars";
 
 const factionMap: { [tiwars: string]: Race } = {
   "The Arborec": "Arborec",
@@ -52,7 +53,6 @@ export async function calculateOdds(): Promise<string> {
     return "No defending units";
   }
 
-  console.log(activeSystem);
   for (const system of allBoardSystems) {
     for (const unit of system.unitsToMove ?? []) {
       allUnitsToBeMoved.push(unit);
@@ -82,7 +82,6 @@ export async function calculateOdds(): Promise<string> {
   const defendingPlayer = players.find(
     (player) => player.color === activeSystem.units[0].color
   )!;
-  console.log(attackingPlayer, defendingPlayer);
   const defendingFleet: Fleet = {};
   for (const unit of activeSystem.units) {
     const unitType = unitMap[unit.name];
@@ -101,21 +100,17 @@ export async function calculateOdds(): Promise<string> {
       defender: { race: defendingRace, riskDirectHit: true },
     },
   };
-  console.log(input);
   var result = calculator.computeProbabilities(input);
-  console.log(result);
   let r1 = 0;
   let r2 = 0;
   for (const key in result.distribution) {
     if (!Number.isInteger(parseInt(key))) continue;
 
-    console.log(result.distribution[key]);
     if (key.includes("-")) {
       r1 += result.distribution[key];
     } else {
       r2 += result.distribution[key];
     }
   }
-  console.log(r1, r2);
   return `${r1.toFixed(2)} - ${r2.toFixed(2)}`;
 }

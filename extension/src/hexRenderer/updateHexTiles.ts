@@ -1,5 +1,14 @@
 import { Material, Mesh, Shader } from "three";
 import {
+  BoardSystem,
+  Game,
+  Planet,
+  Player,
+  TI4Colors,
+  TiWarsApi,
+  Unit,
+} from "../tiwars";
+import {
   backgroundColorsByPlayerColor,
   foregroundColorsByPlayerColor,
   wormholeColors,
@@ -361,9 +370,6 @@ async function updateCanvasTexture(
       ? owningPlayer.planetCards.find((card) => card.name === planet.name)
       : null;
 
-    if (planetCard?.faction) {
-      console.log(planetCard);
-    }
     const statsText = `${planet.resources}/${planet.influence}`;
     let techColor,
       fontColor,

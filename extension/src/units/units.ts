@@ -68,6 +68,9 @@ class UnitsComponent extends HTMLElement {
     const systems = await API.getBoardSystems();
 
     // add the hover button
+    API.getGameLogs().then((logs) => {
+      console.log(logs);
+    });
 
     // Create table header with unit names
     const headerRow = document.createElement("tr");

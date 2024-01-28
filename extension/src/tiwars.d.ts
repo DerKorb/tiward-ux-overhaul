@@ -284,6 +284,76 @@ declare interface Game {
   lastPlayedActionCardId: string;
 }
 
+declare enum Events {
+  GameCreated = "game created",
+  SystemPlaced = "system placed",
+  StartingUnitsPlaced = "starting units placed",
+  StartingSecretObjectiveDiscarded = "starting secret objective discarded",
+  PublicObjectiveRevealed = "public objective revealed",
+  StrategyCardPicked = "strategy card picked",
+  StrategyCardPlayed = "strategy card played",
+  PrimaryAbilityResolved = "primary ability resolved",
+  EndedTurn = "ended turn",
+  SystemActivated = "system activated",
+  ShipsMoved = "ships moved",
+  GroundForcesCommitted = "ground forces committed",
+  EstablishedControl = "established control",
+  CommoditiesReplenished = "commodities replenished",
+  PlayersToReplenishCommoditiesChosen = "players to replenish commodities chosen",
+  SecondaryAbilityResolved = "secondary ability resolved",
+  FactionAbilityUsed = "faction ability used",
+  TechnologyCardPlayed = "technology card played",
+  ExplorationCardDrawn = "exploration card drawn",
+  ExplorationCardResolved = "exploration card resolved",
+  Passed = "passed",
+  TopTwoAgendasOrdered = "top two agendas ordered",
+  TradeRequestAccepted = "trade request accepted",
+  ComponentActionCardPlayed = "component action card played",
+  UnitsProduced = "units produced",
+  ObjectiveScored = "objective scored",
+  ActionCardsDrawn = "action cards drawn",
+  CommandTokensRedistributed = "command tokens redistributed",
+  AnnouncedRetreats = "announced retreats",
+  SpaceCombatRolled = "space combat rolled",
+  SpaceCombatHitsAssigned = "space combat hits assigned",
+  CustodiansTokenRemoved = "custodians token removed",
+  ActionCardPlayed = "action card played",
+  ActionCardSabotaged = "action card sabotaged",
+  BombardmentRolled = "bombardment rolled",
+  SpaceCannonOffenseRolled = "space cannon offense rolled",
+  SustainedDamage = "sustained damage",
+  SpaceCannonOffenseHitsAssigned = "space cannon offense hits assigned",
+  FleetReduced = "fleet reduced",
+  FirstAgendaRevealed = "first agenda revealed",
+  Voted = "voted",
+  AgendaResolved = "agenda resolved",
+  SecondAgendaRevealed = "second agenda revealed",
+  GroundCombatStarted = "ground combat started",
+  GroundCombatRolled = "ground combat rolled",
+  GroundCombatHitsAssigned = "ground combat hits assigned",
+  SecondTechnologyResearched = "second technology researched",
+  StrategyCardActivationUndone = "strategy card activation undone",
+  PlayerLawGained = "player law gained",
+  DiplomaticPressureResolved = "diplomatic pressure resolved",
+  FlagshipAbilityUsed = "flagship ability used",
+  Retreated = "retreated",
+  AntiFighterBarrageRolled = "anti-fighter barrage rolled",
+  AntiFighterBarrageHitsAssigned = "anti-fighter barrage hits assigned",
+  PromissoryNotePlayed = "promissory note played",
+  ResearchGrantReallocationResolved = "research grant reallocation resolved",
+  PoliticsRiderResolved = "politics rider resolved",
+}
+
+declare interface Log<T = any> {
+  _id: string;
+  game: string;
+  event: Events;
+  time: string;
+  user: string;
+  details: T;
+  __v: number;
+}
+
 declare interface TiWarsApi {
   getPlayer: (playerNumber: number) => Promise<Player>;
   getPlayers: () => Promise<Player[]>;
@@ -295,7 +365,7 @@ declare interface TiWarsApi {
   ) => Promise<any>;
   getGame: () => Promise<Game>;
   getBoardSystems: () => Promise<BoardSystem[]>;
-  getGameLogs: (lastLogId: string) => Promise<any>;
+  getGameLogs: (lastLogId?: string) => Promise<Log[]>;
   getChatMessages: (userId: string, lastChatId: string) => Promise<any>;
   getUnreadChats: () => Promise<any>;
   markAsRead: (messageId: string, userId: string) => Promise<any>;

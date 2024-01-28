@@ -1,5 +1,6 @@
 import "./cards/cardRenderer";
 import { updateHexTiles } from "./hexRenderer/updateHexTiles";
+import "./units/events.ts";
 import "./units/odds.ts";
 import "./units/units.ts";
 import "./votes/votes.ts";
@@ -14,6 +15,7 @@ async function main() {
   document.body.appendChild(document.createElement("ti-votes-component"));
   document.body.appendChild(document.createElement("ti-objectives-component"));
   document.body.appendChild(document.createElement("ti-odds-component"));
+  document.body.appendChild(document.createElement("ti-stats-component"));
   // setInterval(updateHexTiles, 4000);
 }
 main();

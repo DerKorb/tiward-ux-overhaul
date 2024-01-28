@@ -1,4 +1,5 @@
 import { Material, Mesh } from "three";
+import { TiWarsApi } from "../tiwars";
 
 let cardsComponentTemplate = document.createElement("template");
 cardsComponentTemplate.innerHTML = `
@@ -54,7 +55,6 @@ class CardsComponent extends HTMLElement {
     );
 
     const player = await API.getPlayer();
-    console.log(player);
     const { actionCards, secretObjectives, promissoryNotes } = player;
 
     actionCards.forEach((card) => {
