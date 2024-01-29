@@ -174,7 +174,29 @@ class StatsComponent extends HTMLElement {
           reject(new Error("Error accessing the indexedDB"));
         };
       });
-      parseCombats(gameLogs);
+      (window as any).gameLogs = gameLogs;
+      const delaysByUser = gameLogs.reduce((delays, log, index) => {
+        if (!delays[log.user]) {
+          delays[log.user] = [];
+        }
+        if (index === 0) {
+          return delays;
+        }
+        delays[log.user].push(
+          new Date(log.time).getTime() -
+            new Date(gameLogs[index - 1].time).getTime()
+        );
+        return delays;
+      }, {} as { [user: string]: number[] });
+      const delaysSortedByUser = Object.entries(delaysByUser).map(
+        ([user, delays]) => ({
+          user,
+          delays,
+        })
+      );
+      (window as any).delays = delaysSortedByUser;
+      const combats = parseCombats(gameLogs);
+      (window as any).combats = combats;
       const groupedLogs = gameLogs.reduce((grouped, log) => {
         if (log.game === game._id) {
           if (!grouped[log.event]) {
